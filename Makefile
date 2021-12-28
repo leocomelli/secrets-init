@@ -5,7 +5,6 @@
 GOOS := linux
 GOARCH := amd64
 LD_FLAGS := -ldflags "-X main.Version=`git describe --tags` -X main.BuildDate=`date -u +%Y-%m-%d_%H:%M:%S` -X main.GitCommit=`git rev-parse HEAD`"
-DOCKER_IMAGE := leocomelli/secrets-init:`git describe --tags | cut -c2-`
 
 .PHONY: build
 build:
@@ -23,15 +22,6 @@ lint:
 .PHONY: test
 test:
 	@go test ./... -v -race
-
-.PHONY: docker-build
-docker-build:
-	@docker build -t $(DOCKER_IMAGE) .
-
-release:
-	@make -s build docker-build
-	# docker login
-	docker push $(DOCKER_IMAGE)
 
 .PHONY: all
 all:
