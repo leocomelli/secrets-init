@@ -18,5 +18,5 @@ var (
 // GetHumanVersion composes the parts of the version in a way that's suitable
 // for displaying to humans.
 func GetHumanVersion() {
-	fmt.Printf("secx %s, commit %s, built at %s", Version, GitCommit, BuildDate)
+	fmt.Printf("secrets-init %s, commit %s, built at %s", Version, GitCommit, BuildDate)
 }
