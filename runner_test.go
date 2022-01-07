@@ -79,7 +79,7 @@ func TestHappyPath(t *testing.T) {
 	}
 
 	expected := `
-export mysecret="s3cr3t"`
+export MYSECRET="s3cr3t"`
 
 	assert.Equal(t, expected, string(content))
 }

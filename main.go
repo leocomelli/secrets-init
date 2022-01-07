@@ -11,8 +11,8 @@ var (
 	}
 
 	templates = map[string]string{
-		"plaintext": `export {{.Name}}="{{.Data}}"`,
-		"json":      `export {{.Name}}_{{.ContentKey}}="{{.ContentValue}}"`,
+		"plaintext": `export {{ .Name  | ToUpper }}="{{ .Data }}"`,
+		"json":      `export {{ .Name  | ToUpper }}_{{ .ContentKey | ToUpper }}="{{ .ContentValue }}"`,
 	}
 
 	parsers = map[string]ContentParser{

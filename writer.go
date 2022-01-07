@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"strings"
 	"text/template"
 )
 
@@ -15,7 +16,12 @@ type Writer struct {
 
 // NewWriter creates a new writer
 func NewWriter(wr io.Writer, tmpl string) (*Writer, error) {
-	t, err := template.New("").Parse(fmt.Sprintf(tmplLoop, tmpl))
+
+	funcMap := template.FuncMap{
+		"ToUpper": strings.ToUpper,
+	}
+
+	t, err := template.New("").Funcs(funcMap).Parse(fmt.Sprintf(tmplLoop, tmpl))
 	if err != nil {
 		return nil, err
 	}

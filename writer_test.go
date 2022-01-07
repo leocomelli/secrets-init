@@ -30,8 +30,8 @@ func TestWriteToStdin(t *testing.T) {
 	_ = w.Write(s...)
 
 	expected := `
-export mysecret_user="root"
-export mysecret_password="s3cr3t"`
+export MYSECRET_USER="root"
+export MYSECRET_PASSWORD="s3cr3t"`
 
 	assert.Equal(t, expected, buf.String())
 }
@@ -68,8 +68,8 @@ func TestWriteToFile(t *testing.T) {
 	}
 
 	expected := `
-export mysecret_user="root"
-export mysecret_password="s3cr3t"`
+export MYSECRET_USER="root"
+export MYSECRET_PASSWORD="s3cr3t"`
 
 	assert.Equal(t, expected, string(content))
 }
