@@ -8,6 +8,7 @@ import (
 )
 
 type MockProvider struct {
+	GenericProvider
 }
 
 func (m *MockProvider) Init() error {

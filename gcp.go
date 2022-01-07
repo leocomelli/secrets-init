@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"path"
-	"strings"
 
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
 	"google.golang.org/api/iterator"
@@ -13,6 +12,7 @@ import (
 
 // GCPSecretManager represents the Google Cloud Platform Secret Manager
 type GCPSecretManager struct {
+	GenericProvider
 	client *secretmanager.Client
 }
 
@@ -55,7 +55,8 @@ func (s *GCPSecretManager) ListSecrets(project string, prefix string) ([]*Secret
 		}
 
 		name := path.Base(resp.GetName())
-		if strings.HasPrefix(name, prefix) {
+
+		if s.Filter(name, prefix) {
 			content, err := s.client.AccessSecretVersion(context.Background(), &secretmanagerpb.AccessSecretVersionRequest{Name: resp.GetName() + "/versions/latest"})
 			if err != nil {
 				return nil, err
