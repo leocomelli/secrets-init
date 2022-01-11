@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 // ContentParser defines secret content parser behaviors
@@ -35,7 +34,7 @@ type JSONContentParser struct {
 func (j *JSONContentParser) Parse(s *SecretData) []*SecretData {
 	m := map[string]interface{}{}
 	if err := json.Unmarshal([]byte(s.Data), &m); err != nil {
-		log.Println("WARN: invalid json")
+		fmt.Printf("\nWARN: [%s] invalid json\n", s.Name)
 	}
 
 	var secrets []*SecretData
