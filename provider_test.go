@@ -28,6 +28,11 @@ func TestFilter(t *testing.T) {
 			`^myapp*|^xxx*`,
 			false,
 		},
+		{
+			"app_password",
+			``,
+			true,
+		},
 	}
 
 	gcp := &GCPSecretManager{}

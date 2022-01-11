@@ -36,7 +36,7 @@ func Run(options *Options) error {
 		return err
 	}
 
-	data, err := provider.ListSecrets(options.Project, options.Prefix)
+	data, err := provider.ListSecrets(options.Project, options.Filter)
 	if err != nil {
 		return err
 	}
