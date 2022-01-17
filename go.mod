@@ -5,12 +5,14 @@ go 1.17
 require (
 	cloud.google.com/go/secretmanager v1.0.0
 	github.com/stretchr/testify v1.7.0
-	google.golang.org/api v0.64.0
-	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb
+	google.golang.org/api v0.65.0
+	google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368
 )
 
 require (
-	cloud.google.com/go v0.99.0 // indirect
+	cloud.google.com/go v0.100.2 // indirect
+	cloud.google.com/go/compute v0.1.0 // indirect
+	cloud.google.com/go/iam v0.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
