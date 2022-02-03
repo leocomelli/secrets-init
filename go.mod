@@ -5,8 +5,8 @@ go 1.17
 require (
 	cloud.google.com/go/secretmanager v1.0.0
 	github.com/stretchr/testify v1.7.0
-	google.golang.org/api v0.65.0
-	google.golang.org/genproto v0.0.0-20220107163113-42d7afdf6368
+	google.golang.org/api v0.66.0
+	google.golang.org/genproto v0.0.0-20220114231437-d2e6a121cae0
 )
 
 require (
@@ -22,7 +22,7 @@ require (
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
-	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
+	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/text v0.3.6 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/grpc v1.40.1 // indirect
