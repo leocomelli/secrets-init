@@ -3,10 +3,10 @@ module github.com/leocomelli/secrets-init
 go 1.17
 
 require (
-	cloud.google.com/go/secretmanager v1.0.0
+	cloud.google.com/go/secretmanager v1.1.0
 	github.com/stretchr/testify v1.7.0
 	google.golang.org/api v0.66.0
-	google.golang.org/genproto v0.0.0-20220114231437-d2e6a121cae0
+	google.golang.org/genproto v0.0.0-20220201184016-50beb8ab5c44
 )
 
 require (
