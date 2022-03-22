@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	cloud.google.com/go/secretmanager v1.2.0
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.7.1
 	google.golang.org/api v0.69.0
 	google.golang.org/genproto v0.0.0-20220211171837-173942840c17
 )
