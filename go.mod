@@ -3,16 +3,16 @@ module github.com/leocomelli/secrets-init
 go 1.17
 
 require (
-	cloud.google.com/go/secretmanager v1.3.0
+	cloud.google.com/go/secretmanager v1.4.0
 	github.com/stretchr/testify v1.7.1
 	google.golang.org/api v0.74.0
-	google.golang.org/genproto v0.0.0-20220324131243-acbaeb5b85eb
+	google.golang.org/genproto v0.0.0-20220405205423-9d709892a2bf
 )
 
 require (
 	cloud.google.com/go v0.100.2 // indirect
 	cloud.google.com/go/compute v1.5.0 // indirect
-	cloud.google.com/go/iam v0.1.0 // indirect
+	cloud.google.com/go/iam v0.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.0 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -26,6 +26,6 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/grpc v1.45.0 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
