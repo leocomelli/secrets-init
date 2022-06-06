@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+
+	"go.uber.org/zap"
 )
 
 // ContentParser defines secret content parser behaviors
@@ -34,7 +36,7 @@ type JSONContentParser struct {
 func (j *JSONContentParser) Parse(s *SecretData) []*SecretData {
 	m := map[string]interface{}{}
 	if err := json.Unmarshal([]byte(s.Data), &m); err != nil {
-		fmt.Printf("\nWARN: [%s] invalid json\n", s.Name)
+		logger.Warn("invalid json", zap.String("name", s.Name))
 	}
 
 	var secrets []*SecretData

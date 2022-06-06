@@ -2,10 +2,14 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
+
+	"go.uber.org/zap"
 )
 
 var (
+	logger, _ = zap.NewProduction()
+
 	providers = map[string]SecretProvider{
 		"gcp": &GCPSecretManager{},
 	}
@@ -36,7 +40,15 @@ type Options struct {
 	Output   string
 }
 
+func (o *Options) String() string {
+	return fmt.Sprintf(
+		"provider: %s, project: %s, filter: %s, parser: %s, template: %s, output: %s",
+		o.Provider, o.Project, o.Filter, o.Parser, o.Template, o.Output,
+	)
+}
+
 func main() {
+
 	options := &Options{}
 
 	flag.StringVar(&options.Provider, "provider", "gcp", "name of the provider that manages the secrets")
@@ -56,6 +68,6 @@ func main() {
 
 	err := Run(options)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal("error getting the secrets", zap.Error(err))
 	}
 }

@@ -3,6 +3,8 @@ package main
 import (
 	"errors"
 	"os"
+
+	"go.uber.org/zap"
 )
 
 var (
@@ -32,6 +34,8 @@ func Run(options *Options) error {
 
 	}
 
+	logger.Info("using options", zap.Any("values", options))
+
 	if err := provider.Init(); err != nil {
 		return err
 	}
@@ -40,6 +44,8 @@ func Run(options *Options) error {
 	if err != nil {
 		return err
 	}
+
+	logger.Info("secrets found", zap.Int("len", len(data)))
 
 	output := os.Stdin
 	if options.Output != "" {
