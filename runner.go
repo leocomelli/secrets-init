@@ -23,7 +23,7 @@ func Run(options *Options) error {
 
 	template := templates[options.Parser]
 	if options.Template != "" {
-		template = templates[options.Parser]
+		template = options.Template
 	}
 
 	provider, ok := providers[options.Provider]
