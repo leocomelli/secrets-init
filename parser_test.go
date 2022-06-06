@@ -1,6 +1,7 @@
 package main
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,8 +14,8 @@ func TestJSONParser(t *testing.T) {
 			Path:         "/project/123/secrets/mysecret",
 			Name:         "mysecret",
 			Data:         `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
-			ContentKey:   "user",
-			ContentValue: "myuser",
+			ContentKey:   "host",
+			ContentValue: "localhost:5432",
 		},
 		&SecretData{
 			Path:         "/project/123/secrets/mysecret",
@@ -27,8 +28,8 @@ func TestJSONParser(t *testing.T) {
 			Path:         "/project/123/secrets/mysecret",
 			Name:         "mysecret",
 			Data:         `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
-			ContentKey:   "host",
-			ContentValue: "localhost:5432",
+			ContentKey:   "user",
+			ContentValue: "myuser",
 		},
 	}
 
@@ -40,6 +41,12 @@ func TestJSONParser(t *testing.T) {
 
 	p := &JSONContentParser{}
 	ss := p.Parse(s)
+
+	// just to ensure the order of the result
+	// it's only important for the test
+	sort.Slice(ss, func(i, j int) bool {
+		return ss[i].ContentKey < ss[j].ContentKey
+	})
 
 	for i := 0; i < len(expected); i++ {
 		assert.Equal(t, expected[i], ss[i])
