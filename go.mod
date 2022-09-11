@@ -5,7 +5,7 @@ go 1.17
 require (
 	cloud.google.com/go/secretmanager v1.5.0
 	github.com/stretchr/testify v1.8.0
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.23.0
 	google.golang.org/api v0.88.0
 	google.golang.org/genproto v0.0.0-20220624142145-8cd45d7dbd1f
 )
