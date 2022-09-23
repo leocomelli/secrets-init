@@ -19,6 +19,7 @@ func NewWriter(wr io.Writer, tmpl string) (*Writer, error) {
 
 	funcMap := template.FuncMap{
 		"ToUpper": strings.ToUpper,
+		"ToLower": strings.ToLower,
 	}
 
 	t, err := template.New("").Funcs(funcMap).Parse(fmt.Sprintf(tmplLoop, tmpl))
