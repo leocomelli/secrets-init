@@ -1,0 +1,60 @@
+# export PROJECT_ID="your-project-id"
+# export SA="secrets-init-sa"
+# export SECRET_ID="myapp"
+#
+# gcloud iam service-accounts create $SA --display-name "$SA"
+# gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:$SA@$PROJECT_ID.iam.gserviceaccount.com --role roles/secretmanager.secretAccessor
+# gcloud projects add-iam-policy-binding $PROJECT_ID --member serviceAccount:$SA@$PROJECT_ID.iam.gserviceaccount.com --role roles/secretmanager.viewer
+# 
+# gcloud iam service-accounts keys create gcp_credentials.json --iam-account=$SA@$PROJECT_ID.iam.gserviceaccount.com
+# kubectl create secret generic gcp-credentials --from-file=gcp_credentials.json
+#
+# gcloud secrets create $SECRET_ID --replication-policy="automatic"
+# gcloud secrets versions add $SECRET_ID --data-file="secret-data-file.json"
+#
+# cat gcp.yml | sed "s/<YOUR_PROJECT_ID>/$PROJECT_ID/g" | kubectl apply -f -
+#
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secrets-init-gcp
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cat /secrets/init/env
+        tail -f /dev/null
+    volumeMounts:
+    - mountPath: /secrets/init
+      name: secrets-init
+  initContainers:
+  - name: secrets-init
+    image: leocomelli/secrets-init:latest
+    imagePullPolicy: Always
+    args:
+    - "--project=<YOUR_PROJECT_ID>"
+    - "--filter=^myapp*"
+    - "-data-parser=json"
+    - "-output=/secrets/init/env"
+    env:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /etc/gcp/gcp_credentials.json
+    volumeMounts:
+    - mountPath: /secrets/init
+      name: secrets-init
+    - name: gcp-credentials-volume
+      mountPath: /etc/gcp
+      readOnly: true
+  volumes:
+  - name: secrets-init
+    emptyDir:
+      medium: Memory
+  - name: gcp-credentials-volume
+    secret:
+      secretName: gcp-credentials
+
