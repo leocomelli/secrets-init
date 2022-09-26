@@ -1,0 +1,81 @@
+# export USER=secrets-init
+# export POLICY_NAME=SecretsInitPolicy
+# export SECRET_NAME=myapp
+#
+# aws iam create-user --user-name $USER
+# export POLICY_ARN=$(aws iam create-policy --policy-name $POLICY_NAME --policy-document \
+# '{
+#    "Version": "2012-10-17",
+#    "Statement": [
+#        {
+#          "Action": [
+#              "secretsmanager:GetResourcePolicy",
+#              "secretsmanager:GetSecretValue",
+#              "secretsmanager:DescribeSecret",
+#              "secretsmanager:ListSecretVersionIds",
+#              "secretsmanager:ListSecrets"
+#          ],
+#          "Resource": "*",
+#          "Effect": "Allow"
+#        }
+#    ]
+# }' | jq -r '.Policy.Arn')
+# aws iam attach-user-policy --policy-arn $POLICY_ARN --user-name $USER
+#
+# export ACCESS_KEY_DATA=$(aws iam create-access-key --user-name $USER)
+# kubectl create secret generic aws-credentials \
+#   --from-literal=AWS_ACCESS_KEY_ID=$(echo $ACCESS_KEY_DATA | jq -r '.AccessKey.AccessKeyId') \
+#   --from-literal=AWS_SECRET_ACCESS_KEY=$(echo $ACCESS_KEY_DATA | jq -r '.AccessKey.SecretAccessKey') 
+#
+# aws secretsmanager create-secret --name $SECRET_NAME --secret-string file://secret-data-file.json
+#
+# kubectl apply -f aws.yml
+#
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secrets-init-aws
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cat /secrets/init/env
+        tail -f /dev/null
+    volumeMounts:
+    - mountPath: /secrets/init
+      name: secrets-init
+  initContainers:
+  - name: secrets-init
+    image: leocomelli/secrets-init:beta
+    imagePullPolicy: Always
+    args:
+    - "--provider=aws"
+    - "--filter=^myapp*"
+    - "-data-parser=json"
+    - "-output=/secrets/init/env"
+    env:
+    - name: AWS_REGION
+      value: "us-east-1"
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: aws-credentials
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: aws-credentials
+          key: AWS_SECRET_ACCESS_KEY
+    volumeMounts:
+    - mountPath: /secrets/init
+      name: secrets-init
+  volumes:
+  - name: secrets-init
+    emptyDir:
+      medium: Memory
+

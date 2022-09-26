@@ -14,7 +14,12 @@ var (
 )
 
 func Run(options *Options) error {
-	if options.Project == "" {
+	provider, ok := providers[options.Provider]
+	if !ok {
+		return ErrUnsupportedProvider
+	}
+
+	if provider.Name() == "gcp" && options.Project == "" {
 		return ErrProjectNotFound
 	}
 
@@ -26,12 +31,6 @@ func Run(options *Options) error {
 	template := templates[options.Parser]
 	if options.Template != "" {
 		template = options.Template
-	}
-
-	provider, ok := providers[options.Provider]
-	if !ok {
-		return ErrUnsupportedProvider
-
 	}
 
 	logger.Info("using options", zap.Any("values", options))

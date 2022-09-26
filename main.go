@@ -12,6 +12,7 @@ var (
 
 	providers = map[string]SecretProvider{
 		"gcp": &GCPSecretManager{},
+		"aws": &AWSSecretManager{},
 	}
 
 	templates = map[string]string{

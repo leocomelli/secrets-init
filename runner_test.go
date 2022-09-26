@@ -11,6 +11,10 @@ type MockProvider struct {
 	GenericProvider
 }
 
+func (m *MockProvider) Name() string {
+	return "mock"
+}
+
 func (m *MockProvider) Init() error {
 	return nil
 }
@@ -47,8 +51,8 @@ func TestUnsupportedParser(t *testing.T) {
 	assert.Equal(t, ErrUnsupportedParser, err)
 }
 
-func TestProjectNotFound(t *testing.T) {
-	opts := &Options{}
+func TestGCPProjectNotFound(t *testing.T) {
+	opts := &Options{Provider: "gcp"}
 	err := Run(opts)
 	assert.Equal(t, ErrProjectNotFound, err)
 }

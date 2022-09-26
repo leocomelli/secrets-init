@@ -16,6 +16,11 @@ type GCPSecretManager struct {
 	client *secretmanager.Client
 }
 
+// Name returns the provider name
+func (s *GCPSecretManager) Name() string {
+	return "gcp"
+}
+
 // Init initializes the GCPSecretManager instance that
 // contains a client for interacting with Secret Manager API.
 //

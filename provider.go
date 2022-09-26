@@ -4,6 +4,7 @@ import "regexp"
 
 // SecretProvider defines the behaviors for a secret provider
 type SecretProvider interface {
+	Name() string
 	Init() error
 	Filter(string, string) bool
 	ListSecrets(string, string) ([]*SecretData, error)

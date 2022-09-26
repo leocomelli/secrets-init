@@ -49,12 +49,13 @@ export MYAPP_USERNAME="root"
 Check the examples directory
 
 - [GCP](https://github.com/leocomelli/secrets-init/blob/main/examples/gcp.yml)
+- [AWS](https://github.com/leocomelli/secrets-init/blob/main/examples/aws.yml)
 
 
 ## Providers
 
 - [x] Google Cloud Platform
-- [ ] AWS
+- [x] AWS
 - [ ] Azure
 
 ## Filter
