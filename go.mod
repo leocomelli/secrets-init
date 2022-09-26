@@ -3,18 +3,17 @@ module github.com/leocomelli/secrets-init
 go 1.17
 
 require (
-	cloud.google.com/go/secretmanager v1.5.0
+	cloud.google.com/go/secretmanager v1.7.0
 	github.com/aws/aws-sdk-go-v2 v1.16.16
 	github.com/aws/aws-sdk-go-v2/config v1.17.7
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.1
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/zap v1.23.0
 	google.golang.org/api v0.97.0
-	google.golang.org/genproto v0.0.0-20220909194730-69f6226f97e5
+	google.golang.org/genproto v0.0.0-20220920201722-2b89144ce006
 )
 
 require (
-	cloud.google.com/go v0.104.0 // indirect
 	cloud.google.com/go/compute v1.9.0 // indirect
 	cloud.google.com/go/iam v0.4.0 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.12.20 // indirect
