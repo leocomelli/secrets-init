@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go/secretmanager v1.7.0
 	github.com/aws/aws-sdk-go-v2 v1.16.16
 	github.com/aws/aws-sdk-go-v2/config v1.17.7
-	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.1
+	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.2
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/zap v1.23.0
 	google.golang.org/api v0.97.0
