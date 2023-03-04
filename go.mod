@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	cloud.google.com/go/secretmanager v1.7.0
-	github.com/aws/aws-sdk-go-v2 v1.17.4
+	github.com/aws/aws-sdk-go-v2 v1.17.5
 	github.com/aws/aws-sdk-go-v2/config v1.17.10
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.16.4
 	github.com/stretchr/testify v1.8.2
