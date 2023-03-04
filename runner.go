@@ -35,7 +35,11 @@ func Run(options *Options) error {
 
 	logger.Info("using options", zap.Any("values", options))
 
-	if err := provider.Init(); err != nil {
+	params := map[string]string{
+		AssumeRoleKey: options.AssumeRole,
+	}
+
+	if err := provider.Init(params); err != nil {
 		return err
 	}
 

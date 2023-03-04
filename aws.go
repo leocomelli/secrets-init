@@ -2,11 +2,18 @@ package main
 
 import (
 	"context"
+	"strconv"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/secretsmanager"
+	"github.com/aws/aws-sdk-go-v2/service/sts"
+	stsTypes "github.com/aws/aws-sdk-go-v2/service/sts/types"
+
 	"go.uber.org/zap"
+	"math/rand"
 )
 
 // AWSSecretManager represents the AWS Secret Manager
@@ -29,16 +36,48 @@ func (s *AWSSecretManager) Name() string {
 // The default configuration sources are:
 // * Environment Variables
 // * Shared Configuration and Shared Credentials files.
-func (s *AWSSecretManager) Init() error {
+func (s *AWSSecretManager) Init(params map[string]string) error {
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
 		return err
+	}
+
+	if role, ok := params[AssumeRoleKey]; ok && role != "" {
+		cfg, err = s.AssumeRole(cfg, role)
+		if err != nil {
+			return err
+		}
 	}
 
 	svc := secretsmanager.NewFromConfig(cfg)
 	s.client = svc
 
 	return nil
+}
+
+func (s *AWSSecretManager) AssumeRole(cfg aws.Config, role string) (aws.Config, error) {
+	sourceAccount := sts.NewFromConfig(cfg)
+
+	logger.Info("Assuming role", zap.String("role", role))
+
+	rand.Seed(time.Now().UnixNano())
+	response, err := sourceAccount.AssumeRole(context.TODO(), &sts.AssumeRoleInput{
+		RoleArn:         aws.String(role),
+		RoleSessionName: aws.String("sc_" + strconv.Itoa(10000+rand.Intn(25000))),
+	})
+
+	if err != nil {
+		return aws.Config{}, err
+	}
+
+	var assumedRoleCreds *stsTypes.Credentials = response.Credentials
+
+	return config.LoadDefaultConfig(context.TODO(), config.WithCredentialsProvider(
+		credentials.NewStaticCredentialsProvider(
+			*assumedRoleCreds.AccessKeyId,
+			*assumedRoleCreds.SecretAccessKey,
+			*assumedRoleCreds.SessionToken,
+		)))
 }
 
 // ListSecrets lists the AWS Secrets using external configurations.

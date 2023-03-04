@@ -15,7 +15,7 @@ func (m *MockProvider) Name() string {
 	return "mock"
 }
 
-func (m *MockProvider) Init() error {
+func (m *MockProvider) Init(_ map[string]string) error {
 	return nil
 }
 

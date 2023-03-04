@@ -31,14 +31,19 @@ var (
 `
 )
 
+const (
+	AssumeRoleKey = "assume-role"
+)
+
 // Options represents the command line options
 type Options struct {
-	Provider string
-	Project  string
-	Filter   string
-	Parser   string
-	Template string
-	Output   string
+	Provider   string
+	AssumeRole string
+	Project    string
+	Filter     string
+	Parser     string
+	Template   string
+	Output     string
 }
 
 func (o *Options) String() string {
@@ -53,6 +58,7 @@ func main() {
 	options := &Options{}
 
 	flag.StringVar(&options.Provider, "provider", "gcp", "name of the provider that manages the secrets")
+	flag.StringVar(&options.AssumeRole, "assume-role", "", "role to assume when using aws provider")
 	flag.StringVar(&options.Project, "project", "", "gcp project that contains the secrets")
 	flag.StringVar(&options.Filter, "filter", "", "regex to filter secrets by name")
 	flag.StringVar(&options.Parser, "data-parser", "plaintext", "parse secret based on data type")

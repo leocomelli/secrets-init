@@ -21,18 +21,17 @@ type JSONContentParser struct {
 //
 // Consider a secret called myscret with the content below
 //
-//     {
-//        "user": "root",
-//        "password": "s3cr3t",
-//        "host" : "127.0.0.1:5432",
-//     }
+//	{
+//	   "user": "root",
+//	   "password": "s3cr3t",
+//	   "host" : "127.0.0.1:5432",
+//	}
 //
 // The following secrets will be returned
 //
 // myscret_user: root
 // mysecret_password: s3cr3t
 // mysecret_host: 127.0.0.1:5432
-//
 func (j *JSONContentParser) Parse(s *SecretData) []*SecretData {
 	m := map[string]interface{}{}
 	if err := json.Unmarshal([]byte(s.Data), &m); err != nil {

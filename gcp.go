@@ -1,5 +1,6 @@
 package main
 
+// nolint:staticcheck
 import (
 	"context"
 	"fmt"
@@ -28,7 +29,7 @@ func (s *GCPSecretManager) Name() string {
 // environment variable.
 //
 // See: https://cloud.google.com/docs/authentication/getting-started
-func (s *GCPSecretManager) Init() error {
+func (s *GCPSecretManager) Init(_ map[string]string) error {
 	c, err := secretmanager.NewClient(context.Background())
 	if err != nil {
 		return err
@@ -42,6 +43,7 @@ func (s *GCPSecretManager) Init() error {
 // ListSecrets lists the GCP Secrets for a given project.
 // Use prefix to filter the secrets starting with a term.
 // If prefix is empty, all secrets are listed.
+// nolint:staticcheck
 func (s *GCPSecretManager) ListSecrets(project string, prefix string) ([]*SecretData, error) {
 	req := &secretmanagerpb.ListSecretsRequest{
 		Parent: fmt.Sprintf("projects/%s", project),
