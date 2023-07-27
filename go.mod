@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.15
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.18.7
 	github.com/aws/aws-sdk-go-v2/service/sts v1.18.6
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.24.0
 	google.golang.org/api v0.111.0
 	google.golang.org/genproto v0.0.0-20230303212802-e74f57abe488
