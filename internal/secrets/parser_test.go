@@ -1,6 +1,7 @@
-package main
+package secrets
 
 import (
+	"github.com/leocomelli/secrets-init/pkg/provider/common"
 	"sort"
 	"testing"
 
@@ -9,22 +10,22 @@ import (
 
 func TestJSONParser(t *testing.T) {
 
-	expected := []*SecretData{
-		&SecretData{
+	expected := []*common.SecretData{
+		{
 			Path:         "/project/123/secrets/mysecret",
 			Name:         "mysecret",
 			Data:         `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
 			ContentKey:   "host",
 			ContentValue: "localhost:5432",
 		},
-		&SecretData{
+		{
 			Path:         "/project/123/secrets/mysecret",
 			Name:         "mysecret",
 			Data:         `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
 			ContentKey:   "password",
 			ContentValue: "s3cr3t",
 		},
-		&SecretData{
+		{
 			Path:         "/project/123/secrets/mysecret",
 			Name:         "mysecret",
 			Data:         `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
@@ -33,7 +34,7 @@ func TestJSONParser(t *testing.T) {
 		},
 	}
 
-	s := &SecretData{
+	s := &common.SecretData{
 		Path: "/project/123/secrets/mysecret",
 		Name: "mysecret",
 		Data: `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
@@ -55,8 +56,8 @@ func TestJSONParser(t *testing.T) {
 
 func TestNoParser(t *testing.T) {
 
-	expected := []*SecretData{
-		&SecretData{
+	expected := []*common.SecretData{
+		{
 			Path:         "/project/123/secrets/mysecret",
 			Name:         "mysecret",
 			Data:         `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,
@@ -65,7 +66,7 @@ func TestNoParser(t *testing.T) {
 		},
 	}
 
-	s := &SecretData{
+	s := &common.SecretData{
 		Path: "/project/123/secrets/mysecret",
 		Name: "mysecret",
 		Data: `{"user": "myuser", "password": "s3cr3t", "host": "localhost:5432"}`,

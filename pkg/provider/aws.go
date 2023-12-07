@@ -1,7 +1,8 @@
-package main
+package provider
 
 import (
 	"context"
+	"github.com/leocomelli/secrets-init/pkg/provider/common"
 	"strconv"
 	"time"
 
@@ -42,7 +43,7 @@ func (s *AWSSecretManager) Init(params map[string]string) error {
 		return err
 	}
 
-	if role, ok := params[AssumeRoleKey]; ok && role != "" {
+	if role, ok := params[common.AssumeRoleKey]; ok && role != "" {
 		cfg, err = s.AssumeRole(cfg, role)
 		if err != nil {
 			return err
@@ -83,9 +84,9 @@ func (s *AWSSecretManager) AssumeRole(cfg aws.Config, role string) (aws.Config, 
 // ListSecrets lists the AWS Secrets using external configurations.
 // Use prefix to filter the secrets starting with a term.
 // If prefix is empty, all secrets are listed.
-func (s *AWSSecretManager) ListSecrets(_ string, prefix string) ([]*SecretData, error) {
+func (s *AWSSecretManager) ListSecrets(_ string, prefix string) ([]*common.SecretData, error) {
 	var (
-		data  []*SecretData
+		data  []*common.SecretData
 		token string
 	)
 
@@ -113,7 +114,7 @@ func (s *AWSSecretManager) ListSecrets(_ string, prefix string) ([]*SecretData, 
 					continue
 				}
 
-				data = append(data, &SecretData{
+				data = append(data, &common.SecretData{
 					Path: name,
 					Name: name,
 					Data: aws.ToString(resp.SecretString),
