@@ -40,6 +40,7 @@ it also parses the secret content as plain text or json.
 
 	cmd.AddCommand(
 		newSyncCmd().cmd,
+		newVersionCmd().cmd,
 	)
 	root.cmd = cmd
 	return root

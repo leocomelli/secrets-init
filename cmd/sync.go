@@ -34,8 +34,6 @@ func newSyncCmd() *syncCmd {
 		ValidArgsFunction: cobra.NoFileCompletions,
 		RunE: func(cmd *cobra.Command, args []string) error {
 
-			GetHumanVersion()
-
 			fetch, err := secrets.New(secretOpts)
 			if err != nil {
 				common.Logger.Fatal("error getting the secrets", zap.Error(err))
