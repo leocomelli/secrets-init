@@ -20,11 +20,12 @@ func (r *syncCmd) execute() {
 	}
 }
 
-func newSyncCmd() *syncCmd {
+func newSyncCmd(data *data) *syncCmd {
 	sync := &syncCmd{}
 	secretOpts := &common.SecretsOpts{}
 
 	cmd := &cobra.Command{
+		Version:           data.version,
 		Use:               "sync",
 		Aliases:           []string{"s"},
 		Short:             "Sync external secrets to a container init",

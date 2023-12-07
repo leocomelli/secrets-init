@@ -11,6 +11,12 @@ type rootCmd struct {
 	cmd *cobra.Command
 }
 
+type data struct {
+	version string
+	commit  string
+	date    string
+}
+
 func (r *rootCmd) execute() {
 	if err := r.cmd.Execute(); err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err)
@@ -18,11 +24,12 @@ func (r *rootCmd) execute() {
 	}
 }
 
-func newRootCmd() *rootCmd {
+func newRootCmd(data *data) *rootCmd {
 	root := &rootCmd{}
 	cmd := &cobra.Command{
-		Use:   "secret-init",
-		Short: "Read external secrets from some providers",
+		Version: data.version,
+		Use:     "secret-init",
+		Short:   "Read external secrets from some providers",
 		Long: `
 This is a simple CLI that reads secrets from Secrets Manager, like:
   - AWS
@@ -39,11 +46,18 @@ it also parses the secret content as plain text or json.
 	}
 
 	cmd.AddCommand(
-		newSyncCmd().cmd,
-		newVersionCmd().cmd,
+		newSyncCmd(data).cmd,
+		newVersionCmd(data).cmd,
 	)
 	root.cmd = cmd
 	return root
 }
 
-func Execute() { newRootCmd().execute() }
+func Execute(version, commit, date string) {
+	newRootCmd(&data{
+		version: version,
+		commit:  commit,
+		date:    date,
+	}).execute()
+
+}

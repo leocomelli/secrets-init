@@ -6,17 +6,6 @@ import (
 	"os"
 )
 
-var (
-	// The git commit that was compiled. These will be filled in by the compiler.
-	GitCommit string
-
-	// The main version number that is being run at the moment.
-	Version string
-
-	// BuildDate contains the date and time of build process.
-	BuildDate string
-)
-
 type versionCmd struct {
 	cmd *cobra.Command
 }
@@ -28,16 +17,17 @@ func (r *versionCmd) execute() {
 	}
 }
 
-func newVersionCmd() *versionCmd {
+func newVersionCmd(data *data) *versionCmd {
 	sync := &versionCmd{}
 	cmd := &cobra.Command{
+		Version: data.version,
 		Use:     "version",
 		Aliases: []string{"v"},
 		Short:   "Return the current version of secret init",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Build Date:", BuildDate)
-			fmt.Println("Git Commit:", GitCommit)
-			fmt.Println("Version:", Version)
+			fmt.Println("Build Date:", data.date)
+			fmt.Println("Git Commit:", data.commit)
+			fmt.Println("Version:", data.version)
 		},
 	}
 
