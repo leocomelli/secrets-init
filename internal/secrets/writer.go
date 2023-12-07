@@ -1,7 +1,8 @@
-package main
+package secrets
 
 import (
 	"fmt"
+	"github.com/leocomelli/secrets-init/pkg/provider/common"
 	"io"
 	"strings"
 	"text/template"
@@ -34,6 +35,6 @@ func NewWriter(wr io.Writer, tmpl string) (*Writer, error) {
 }
 
 // Write writes the secrets in a file
-func (w *Writer) Write(s ...*SecretData) error {
+func (w *Writer) Write(s ...*common.SecretData) error {
 	return w.Tmpl.Execute(w.Writer, s)
 }

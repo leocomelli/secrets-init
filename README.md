@@ -5,7 +5,7 @@ This is a simple CLI that reads secrets from Secrets Manager. It's a perfect "in
 ## CLI
 
 ```sh
-./secrets-init \
+./secrets-init sync \
     --provider YOUR_CLOUD_PROVIDER \
     --project YOUR_PROJECT_ID \
     --filter YOUR_FILTER \
@@ -29,7 +29,7 @@ Given a secret called `myapp` with the content below:
 Running secrets-init with the flags:
 
 ```bash
-./secrets-init \
+./secrets-init sync \
     --provider gcp \
     --project myproject \
     --filter=^myapp*" \

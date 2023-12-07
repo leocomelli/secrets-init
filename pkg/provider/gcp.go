@@ -1,9 +1,10 @@
-package main
+package provider
 
 // nolint:staticcheck
 import (
 	"context"
 	"fmt"
+	"github.com/leocomelli/secrets-init/pkg/provider/common"
 	"path"
 
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
@@ -44,13 +45,13 @@ func (s *GCPSecretManager) Init(_ map[string]string) error {
 // Use prefix to filter the secrets starting with a term.
 // If prefix is empty, all secrets are listed.
 // nolint:staticcheck
-func (s *GCPSecretManager) ListSecrets(project string, prefix string) ([]*SecretData, error) {
+func (s *GCPSecretManager) ListSecrets(project string, prefix string) ([]*common.SecretData, error) {
 	req := &secretmanagerpb.ListSecretsRequest{
 		Parent: fmt.Sprintf("projects/%s", project),
 	}
 	it := s.client.ListSecrets(context.Background(), req)
 
-	var data []*SecretData
+	var data []*common.SecretData
 
 	for {
 		resp, err := it.Next()
@@ -69,7 +70,7 @@ func (s *GCPSecretManager) ListSecrets(project string, prefix string) ([]*Secret
 				return nil, err
 			}
 
-			data = append(data, &SecretData{
+			data = append(data, &common.SecretData{
 				Path: resp.GetName(),
 				Name: name,
 				Data: string(content.Payload.Data),
