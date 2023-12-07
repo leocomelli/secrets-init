@@ -59,7 +59,7 @@ func (s *AWSSecretManager) Init(params map[string]string) error {
 func (s *AWSSecretManager) AssumeRole(cfg aws.Config, role string) (aws.Config, error) {
 	sourceAccount := sts.NewFromConfig(cfg)
 
-	common.Logger.Info("Assuming role", zap.String("role", role))
+	logger.Info("Assuming role", zap.String("role", role))
 
 	rand.Seed(time.Now().UnixNano())
 	response, err := sourceAccount.AssumeRole(context.TODO(), &sts.AssumeRoleInput{
@@ -110,7 +110,7 @@ func (s *AWSSecretManager) ListSecrets(_ string, prefix string) ([]*common.Secre
 				})
 
 				if err != nil {
-					common.Logger.Error("error getting the secret value", zap.String("name", name))
+					logger.Error("error getting the secret value", zap.String("name", name))
 					continue
 				}
 

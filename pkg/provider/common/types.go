@@ -1,7 +1,5 @@
 package common
 
-import "go.uber.org/zap"
-
 // SecretData represents a secret thta is store in a given Secret Manager provider
 type SecretData struct {
 	Path         string
@@ -23,9 +21,6 @@ type SecretsOpts struct {
 }
 
 const (
+	// AssumeRoleKey can be use as a key to map assume role
 	AssumeRoleKey = "assume-role"
-)
-
-var (
-	Logger, _ = zap.NewProduction()
 )

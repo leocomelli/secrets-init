@@ -2,7 +2,12 @@ package provider
 
 import (
 	"github.com/leocomelli/secrets-init/pkg/provider/common"
+	"go.uber.org/zap"
 	"regexp"
+)
+
+var (
+	logger, _ = zap.NewProduction()
 )
 
 // SecretProvider defines the behaviors for a secret provider

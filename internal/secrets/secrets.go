@@ -46,7 +46,7 @@ func (s *Sync) Secrets() error {
 		return err
 	}
 
-	common.Logger.Info("secrets found", zap.Int("len", len(data)))
+	logger.Info("secrets found", zap.Int("len", len(data)))
 
 	output := os.Stdin
 	if s.output != "" {
